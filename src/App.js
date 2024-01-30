@@ -1,25 +1,36 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
+
+  const [apidata, setApidata] = useState([]);
+
+  //useEffect(function,array)
+  useEffect(() => {
+    //condition 
+    fetch("https://my-json-server.typicode.com/horizon-code-academy/fake-movies-api/movies")
+      .then((data) => data.json()).then((response) => { setApidata([...response]); });
+
+
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      <h1>Movie App</h1>
+      <input type='text' placeholder='Enter movie name...' />
+      {
+      apidata?.map((data,index) =>{
+
+        return(
+          <div>
+            <li key={index}>{data.Title} Year: {data.Year}</li>
+            
+      </div>
+        )
+      })
+    }
+  </div>
+  )
 }
 
 export default App;
